@@ -10,6 +10,7 @@ function AuthRequire({ children }) {
     return <LoadingScreen />;
   }
 
+//   state bên dưới ở đâu ra?
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
