@@ -75,7 +75,7 @@ function AuthProvider ({children}) {
               setSession(accessToken);
     
               const response = await apiService.get("/users/me");
-              const user = response.data;
+              const user = response.data.data;
               console.log("user in initialize: ", user)
     
               dispatch({
