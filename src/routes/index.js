@@ -8,12 +8,20 @@ import UserProfilePage from './../pages/UserProfilePage';
 import LoginPage from './../pages/LoginPage';
 import RegisterPage from './../pages/RegisterPage';
 import NotFoundPage from './../pages/NotFoundPage';
+import AuthRequire from './AuthRequire';
 
 function Router() {
   return (
     <Routes>
         {/* first định nghĩa các Route có main layout */}
-        <Route path="/" element={<MainLayout/>}>
+        <Route 
+        path="/" 
+        element={
+          <AuthRequire>
+            <MainLayout/>
+          </AuthRequire>
+      }
+        >
             <Route index element={<HomePage/>}></Route>
             <Route path="account" element={<AccountPage/>}></Route>
             <Route path="user/:userId" element={<UserProfilePage/>}></Route>
