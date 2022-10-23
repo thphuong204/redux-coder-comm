@@ -76,6 +76,7 @@ function AuthProvider ({children}) {
     
               const response = await apiService.get("/users/me");
               const user = response.data;
+              console.log("user in initialize: ", user)
     
               dispatch({
                 type: INITIALIZE,
@@ -108,7 +109,8 @@ function AuthProvider ({children}) {
 
     const login = async({email,password}, callback) => {
         const response = await apiService.post("/auth/login", {email,password});
-        const {user, accessToken} = response.data;
+        console.log("response in login", response)
+        const {user, accessToken} = response.data.data;
 
 
         setSession (accessToken);
