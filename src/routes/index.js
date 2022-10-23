@@ -19,7 +19,7 @@ function Router() {
             <Route path="user/:userId" element={<UserProfilePage/>}></Route>
         </Route>
 
-        <Route path="/" element={<BlankLayout/>}>
+        <Route element={<BlankLayout/>}>
             <Route path="/login" element={<LoginPage/>}></Route>
             <Route path="/register" element={<RegisterPage/>}></Route>
             <Route path="*" element={<NotFoundPage/>}></Route>
