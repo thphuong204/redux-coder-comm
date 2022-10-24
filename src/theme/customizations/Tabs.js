@@ -55,5 +55,4 @@ function Tabs(theme) {
   }
   
   export default Tabs;
-  Footer
   
