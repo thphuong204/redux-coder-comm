@@ -114,7 +114,7 @@ export const sendPostReaction =
       dispatch(
         slice.actions.sendPostReactionSuccess({
           postId,
-          reactions: response.data,
+          reactions: response.data.data,
         })
       );
     } catch (error) {

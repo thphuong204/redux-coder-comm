@@ -111,7 +111,7 @@ export const sendCommentReaction =
       dispatch(
         slice.actions.sendCommentReactionSuccess({
           commentId,
-          reactions: response.data,
+          reactions: response.data.data,
         })
       );
     } catch (error) {
