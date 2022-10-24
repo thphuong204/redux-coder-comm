@@ -74,7 +74,7 @@ export const getPosts =
         params,
       });
       if (page === 1) dispatch(slice.actions.resetPosts());
-      dispatch(slice.actions.getPostsSuccess(response.data));
+      dispatch(slice.actions.getPostsSuccess(response.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);
@@ -92,7 +92,7 @@ export const createPost =
         content,
         image: imageUrl,
       });
-      dispatch(slice.actions.createPostSuccess(response.data));
+      dispatch(slice.actions.createPostSuccess(response.data.data));
       toast.success("Post successfully");
       dispatch(getCurrentUserProfile());
     } catch (error) {
