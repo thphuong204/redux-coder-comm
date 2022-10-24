@@ -70,7 +70,7 @@ export const getComments =
       });
       dispatch(
         slice.actions.getCommentsSuccess({
-          ...response.data,
+          ...response.data.data,
           postId,
           page,
         })
@@ -90,7 +90,7 @@ export const createComment =
         content,
         postId,
       });
-      dispatch(slice.actions.createCommentSuccess(response.data));
+      dispatch(slice.actions.createCommentSuccess(response.data.data));
       dispatch(getComments({ postId }));
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
