@@ -79,7 +79,7 @@ export const updateUserProfile =
         data.avatarUrl = imageUrl;
       }
       const response = await apiService.put(`/users/${userId}`, data);
-      dispatch(slice.actions.updateUserProfileSuccess(response.data));
+      dispatch(slice.actions.updateUserProfileSuccess(response.data.data));
       toast.success("Update Profile successfully");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
@@ -91,7 +91,7 @@ export const getUser = (id) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
     const response = await apiService.get(`/users/${id}`);
-    dispatch(slice.actions.getUserSuccess(response.data));
+    dispatch(slice.actions.getUserSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error));
     toast.error(error.message);
@@ -102,7 +102,7 @@ export const getCurrentUserProfile = () => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
     const response = await apiService.get("/users/me");
-    dispatch(slice.actions.updateUserProfileSuccess(response.data));
+    dispatch(slice.actions.updateUserProfileSuccess(response.data.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error));
   }
