@@ -103,7 +103,7 @@ export const getUsers =
       const params = { page, limit };
       if (filterName) params.name = filterName;
       const response = await apiService.get("/users", { params });
-      dispatch(slice.actions.getUsersSuccess(response.data));
+      dispatch(slice.actions.getUsersSuccess(response.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
       toast.error(error.message);
@@ -118,7 +118,7 @@ export const getFriends =
       const params = { page, limit };
       if (filterName) params.name = filterName;
       const response = await apiService.get("/friends", { params });
-      dispatch(slice.actions.getFriendsSuccess(response.data));
+      dispatch(slice.actions.getFriendsSuccess(response.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);
@@ -135,7 +135,7 @@ export const getFriendRequests =
       const response = await apiService.get("/friends/requests/incoming", {
         params,
       });
-      dispatch(slice.actions.getFriendRequestsSuccess(response.data));
+      dispatch(slice.actions.getFriendRequestsSuccess(response.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);
@@ -149,7 +149,7 @@ export const sendFriendRequest = (targetUserId) => async (dispatch) => {
       to: targetUserId,
     });
     dispatch(
-      slice.actions.sendFriendRequestSuccess({ ...response.data, targetUserId })
+      slice.actions.sendFriendRequestSuccess({ ...response.data.data, targetUserId })
     );
     toast.success("Request sent");
   } catch (error) {
@@ -165,7 +165,7 @@ export const declineRequest = (targetUserId) => async (dispatch) => {
       status: "declined",
     });
     dispatch(
-      slice.actions.declineRequestSuccess({ ...response.data, targetUserId })
+      slice.actions.declineRequestSuccess({ ...response.data.data, targetUserId })
     );
     toast.success("Request declined");
   } catch (error) {
@@ -181,7 +181,7 @@ export const acceptRequest = (targetUserId) => async (dispatch) => {
       status: "accepted",
     });
     dispatch(
-      slice.actions.acceptRequestSuccess({ ...response.data, targetUserId })
+      slice.actions.acceptRequestSuccess({ ...response.data.data, targetUserId })
     );
     toast.success("Request accepted");
   } catch (error) {
@@ -197,7 +197,7 @@ export const cancelRequest = (targetUserId) => async (dispatch) => {
       `/friends/requests/${targetUserId}`
     );
     dispatch(
-      slice.actions.cancelRequestSuccess({ ...response.data, targetUserId })
+      slice.actions.cancelRequestSuccess({ ...response.data.data, targetUserId })
     );
     toast.success("Request cancelled");
   } catch (error) {
@@ -211,7 +211,7 @@ export const removeFriend = (targetUserId) => async (dispatch) => {
   try {
     const response = await apiService.delete(`/friends/${targetUserId}`);
     dispatch(
-      slice.actions.removeFriendSuccess({ ...response.data, targetUserId })
+      slice.actions.removeFriendSuccess({ ...response.data.data, targetUserId })
     );
     toast.success("Friend removed");
   } catch (error) {
