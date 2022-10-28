@@ -33,21 +33,21 @@ function PostForm() {
   } = methods;
   const dispatch = useDispatch();
 
-  // const handleDrop = useCallback(
-  //   (acceptedFiles) => {
-  //     const file = acceptedFiles[0];
+  const handleDrop = useCallback(
+    (acceptedFiles) => {
+      const file = acceptedFiles[0];
 
-  //     if (file) {
-  //       setValue(
-  //         "image",
-  //         Object.assign(file, {
-  //           preview: URL.createObjectURL(file),
-  //         })
-  //       );
-  //     }
-  //   },
-  //   [setValue]
-  // );
+      if (file) {
+        setValue(
+          "image",
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        );
+      }
+    },
+    [setValue]
+  );
 
   const fileInput= useRef();
 
@@ -55,12 +55,12 @@ function PostForm() {
     dispatch(createPost(data)).then(() => reset());
   };
 
-  const handleFile = (e) => {
-    const file = fileInput.current.files[0]
-    if (file){ 
-      setValue("image", file)
-    }
-  }
+  // const handleFile = (e) => {
+  //   const file = fileInput.current.files[0]
+  //   if (file){ 
+  //     setValue("image", file)
+  //   }
+  // }
 
   return (
     <Card sx={{ p: 3 }}>
@@ -80,14 +80,14 @@ function PostForm() {
             }}
           />
 
-            <input type="file" ref={fileInput} onChange={handleFile}/>
+            {/* <input type="file" ref={fileInput} onChange={handleFile}/> */}
 
-          {/* <FUploadImage
+          <FUploadImage
             name="image"
             accept="image/*"
             maxSize={3145728}
             onDrop={handleDrop}
-          /> */}
+          />
 
           <Box
             sx={{
