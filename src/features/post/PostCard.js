@@ -8,6 +8,8 @@ import {
   Typography,
   CardHeader,
   IconButton,
+  Menu,
+  MenuItem
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { fDate } from "../../utils/formatTime";
@@ -17,7 +19,36 @@ import PostReaction from "./PostReaction";
 import CommentForm from "../comment/CommentForm";
 import CommentList from "../comment/CommentList";
 
+import {useDispatch} from "react-redux";
+import {deletePost} from "./postSlice";
+import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
+
 function PostCard({ post }) {
+
+  const dispatch = useDispatch();
+  const { user } = useAuth();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDeletePost  = () => {
+    if (user._id === post.author._id) {
+      const postId = post._id;
+      const userId = user._id;
+      dispatch(deletePost(postId,userId))
+    }
+    if (user._id !== post.author._id) {
+      toast.error("You can't delete others' posts");
+    }
+  }
+
   return (
     <Card>
       <CardHeader
@@ -45,9 +76,34 @@ function PostCard({ post }) {
           </Typography>
         }
         action={
-          <IconButton>
+          <>
+          <IconButton onClick={handleClick}>
             <MoreVertIcon sx={{ fontSize: 30 }} />
           </IconButton>
+
+          <Menu
+          id="demo-positioned-menu"
+          aria-labelledby="demo-positioned-button"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          >
+            <MenuItem onClick={()=> {
+              handleDeletePost();
+              handleClose();
+            }}
+            >Delete This Post
+            </MenuItem>
+          </Menu>
+          </>
         }
       />
 
