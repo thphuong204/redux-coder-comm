@@ -152,6 +152,7 @@ export const sendPostReaction =
       })
       dispatch(slice.actions.resetPosts());
       dispatch(slice.actions.deletePostSuccess(response.data.data));
+      dispatch(getCurrentUserProfile());
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);
