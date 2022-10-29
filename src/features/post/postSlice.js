@@ -64,14 +64,20 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = null;
       const { posts, count } = action.payload;
-
-      console.log("response for render", posts)
       posts.forEach((post) => {
         state.postsById[post._id] = post;
         if (!state.currentPagePosts.includes(post._id))
           state.currentPagePosts.push(post._id);
       });
       state.totalPosts = count;
+    },
+
+    updatePostSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const changedPost = action.payload;
+      if (state.currentPagePosts.length % POSTS_PER_PAGE === 0)
+      state.postsById[changedPost._id] = changedPost;
     },
   },
 });
@@ -152,6 +158,28 @@ export const sendPostReaction =
       })
       dispatch(slice.actions.resetPosts());
       dispatch(slice.actions.deletePostSuccess(response.data.data));
+      dispatch(getCurrentUserProfile());
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
+
+
+  export const changePost =
+  ( {content, image ,postId}) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      // upload image to cloudinary
+      const imageUrl = await cloudinaryUpload(image);
+      const response = await apiService.put(`/posts/${postId}`, {
+        content,
+        image: imageUrl,
+      });
+      console.log("change Post,", response);
+      dispatch(slice.actions.updatePostSuccess(response.data.data));
+      toast.success("Update post successfully");
       dispatch(getCurrentUserProfile());
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
