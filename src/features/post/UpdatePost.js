@@ -57,15 +57,9 @@ function UpdatePost({post,handleCloseModal,handleCloseShowMore}) {
     dispatch(changePost({...data,postId})).then(() => reset())
     
     handleCloseModal();
-    // handleCloseShowMore()
+    handleCloseShowMore();
   };
 
-  // const handleFile = (e) => {
-  //   const file = fileInput.current.files[0]
-  //   if (file){ 
-  //     setValue("image", file)
-  //   }
-  // }
 
   return (
     <Card sx={{ p: 3 }}>

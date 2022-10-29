@@ -77,7 +77,8 @@ const slice = createSlice({
       state.error = null;
       const changedPost = action.payload;
       if (state.currentPagePosts.length % POSTS_PER_PAGE === 0)
-      state.postsById[changedPost._id] = changedPost;
+      state.postsById[changedPost._id].content = changedPost.content;
+      state.postsById[changedPost._id].image = changedPost.image;
     },
   },
 });
@@ -180,7 +181,6 @@ export const sendPostReaction =
       console.log("change Post,", response);
       dispatch(slice.actions.updatePostSuccess(response.data.data));
       toast.success("Update post successfully");
-      dispatch(getCurrentUserProfile());
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);
