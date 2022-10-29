@@ -18,7 +18,7 @@ const defaultValues = {
   image: null,
 };
 
-function UpdatePost({post,handleCloseModal,handleCloseShowMore}) {
+function UpdatePost({post,handleCloseModalEditPost,handleCloseShowMore}) {
   const { isLoading } = useSelector((state) => state.post);
 
   const methods = useForm({
@@ -56,7 +56,7 @@ function UpdatePost({post,handleCloseModal,handleCloseShowMore}) {
     const postId= post._id;
     dispatch(changePost({...data,postId})).then(() => reset())
     
-    handleCloseModal();
+    handleCloseModalEditPost();
     handleCloseShowMore();
   };
 

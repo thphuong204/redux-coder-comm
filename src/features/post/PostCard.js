@@ -52,18 +52,23 @@ function PostCard({ post }) {
     setAnchorEl(null);
   };
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpenModal = () => {
+  const [openModalEdit, setOpenModalEdit] = React.useState(false);
+  const handleOpenModalEditPost = () => {
     if (user._id === post.author._id) {
-      setOpen(true)
+      setOpenModalEdit(true)
     }
 
     if (user._id !== post.author._id) {
       toast.error("You can't change other people' posts");
     }
   };
-  const handleCloseModal = () => setOpen(false);
+  const handleCloseModalEditPost = () => setOpenModalEdit(false);
   
+
+  const [openModalDelete, setOpenModalDelete] = React.useState(false);
+  const handleOpenModalDelete = () => setOpenModalDelete(true);
+  const handleCloseModalDelete = () => setOpenModalDelete(false);
+
 
   const handleDeletePost  = () => {
     if (user._id === post.author._id) {
@@ -123,28 +128,50 @@ function PostCard({ post }) {
             horizontal: 'left',
           }}
           >
-            <MenuItem onClick={()=> {
-              handleDeletePost();
-              handleCloseShowMore();
+            <MenuItem onClick={ (e)=> {
+              handleOpenModalDelete();
             }}
             >Delete Post
             </MenuItem>
+            <Modal
+              open={openModalDelete}
+              onClose={handleCloseModalDelete}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+               <Box sx={style}>
+                      <Typography id="modal-modal-description">
+                        Are you sure to delete this post?
+                      </Typography>
+                      <Stack direction="row" justifyContent="center">
+                      <IconButton size="small" onClick ={() => 
+                        { handleDeletePost();
+                          handleCloseShowMore();
+                        }
+                      }
+                      >
+                          Yes
+                      </IconButton>
+                      <IconButton size="small" onClick ={() => handleCloseModalDelete()}>No</IconButton>
+                      </Stack>
+                </Box>
+            </Modal>
+
             <MenuItem onClick={ (e)=> {
-              console.log("post on Click edit post",post);
-              handleOpenModal();
+              handleOpenModalEditPost();
             }}
             >Edit Post
             </MenuItem>
               <Modal
-              open={open}
-              onClose={handleCloseModal}
+              open={openModalEdit}
+              onClose={handleCloseModalEditPost}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
                 <UpdatePost 
                 post={post} 
-                handleCloseModal={handleCloseModal} 
+                handleCloseModalEditPost={handleCloseModalEditPost} 
                 handleCloseShowMore={handleCloseShowMore}
                 />
               </Box>
