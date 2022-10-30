@@ -6,8 +6,13 @@ const initialState = {
   isLoading: false,
   error: null,
   currentPageUsers: [],
+  totalUsers:0,
   usersById: {},
   totalPages: 1,
+  currentPageUsersOutgoing:[],
+  usersByIdOutgoing:{},
+  totalPagesOutgoing: 1,
+  totalUsersOutgoing:0,
 };
 
 const slice = createSlice({
@@ -52,6 +57,17 @@ const slice = createSlice({
       const { users, count, totalPages } = action.payload;
       users.forEach((user) => (state.usersById[user._id] = user));
       state.currentPageUsers = users.map((user) => user._id);
+      state.totalUsers = count;
+      state.totalPages = totalPages;
+    },
+
+    getFriendRequestsOutgoingSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+
+      const {users: usersOutgoing, count, totalPages } = action.payload;
+      usersOutgoing?.forEach((user) => (state.usersById[user._id] = user));
+      state.currentPageUsers = usersOutgoing.map((user) => user._id);
       state.totalUsers = count;
       state.totalPages = totalPages;
     },
@@ -219,3 +235,20 @@ export const removeFriend = (targetUserId) => async (dispatch) => {
     toast.error(error.message);
   }
 };
+
+export const getFriendRequestsOutgoing =
+  ({ filterName, page = 1, limit = 12 }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const params = { page, limit };
+      if (filterName) params.name = filterName;
+      const response = await apiService.get("/friends/requests/outgoing", {
+        params,
+      });
+      dispatch(slice.actions.getFriendRequestsOutgoingSuccess(response.data.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
