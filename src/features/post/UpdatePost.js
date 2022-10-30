@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback } from "react";
 import { Box, Card, alpha, Stack } from "@mui/material";
 
 import { FormProvider, FTextField, FUploadImage } from "../../components/form";
@@ -50,7 +50,6 @@ function UpdatePost({post,handleCloseModalEditPost,handleCloseShowMore}) {
     [setValue]
   );
 
-  const fileInput= useRef();
 
   const onSubmit = (data) => {
     const postId= post._id;

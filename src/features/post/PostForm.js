@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback } from "react";
 import { Box, Card, alpha, Stack } from "@mui/material";
 
 import { FormProvider, FTextField, FUploadImage } from "../../components/form";
@@ -49,18 +49,12 @@ function PostForm() {
     [setValue]
   );
 
-  const fileInput= useRef();
 
   const onSubmit = (data) => {
     dispatch(createPost(data)).then(() => reset());
   };
 
-  // const handleFile = (e) => {
-  //   const file = fileInput.current.files[0]
-  //   if (file){ 
-  //     setValue("image", file)
-  //   }
-  // }
+
 
   return (
     <Card sx={{ p: 3 }}>
