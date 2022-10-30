@@ -14,32 +14,47 @@ import UserCard from "./UserCard";
 import SearchInput from "../../components/SearchInput";
 
 function FriendRequests() {
-  const [filterName, setFilterName] = useState("");
-  const [page, setPage] = React.useState(1);
+  const [filterNameIncoming, setFilterNameIncoming] = useState("");
+  const [pageIncoming, setPageIncoming] = React.useState(1);
 
-  const { currentPageUsers, usersById, totalUsers, totalPages } = useSelector(
+  const { 
+    currentPageUsers, 
+    usersById, 
+    totalUsers, 
+    totalPages,} = useSelector(
     (state) => state.friend
   );
-  const users = currentPageUsers.map((userId) => usersById[userId]);
+
+  const usersIncoming = currentPageUsers.map((userId) => usersById[userId]);
   const dispatch = useDispatch();
 
-  const handleSubmit = (searchQuery) => {
-    setFilterName(searchQuery);
+  const handleSubmitIncoming = (searchQuery) => {
+    setFilterNameIncoming(searchQuery);
   };
 
+
   useEffect(() => {
-    dispatch(getFriendRequests({ filterName, page }));
-  }, [filterName, page, dispatch]);
+    dispatch(getFriendRequests({ filterNameIncoming, pageIncoming }));
+  }, [filterNameIncoming,pageIncoming, dispatch]);
 
   return (
     <Container>
-      <Typography variant="h4" sx={{ mb: 3 }}>
+      <Typography variant="h4" sx={{ mb: 5 }}>
         Friend Requests
       </Typography>
-      <Card sx={{ p: 3 }}>
+      <Card sx={{ p: 3, mb:5 }}>
+        <Box sx={{ flexGrow: 1, mb:3  }} >
+            <Typography
+             variant="title"
+             sx={{ color: "text.primary", ml: 1, fontWeight: "bold" }}
+             >
+              Incoming friend requests
+             </Typography>
+        </Box>
         <Stack spacing={2}>
           <Stack direction={{ xs: "column", md: "row" }} alignItems="center">
-            <SearchInput handleSubmit={handleSubmit} />
+            
+            <SearchInput handleSubmit={handleSubmitIncoming} />
             <Box sx={{ flexGrow: 1 }} />
             <Typography
               variant="subtitle"
@@ -54,20 +69,22 @@ function FriendRequests() {
 
             <Pagination
               count={totalPages}
-              page={page}
-              onChange={(e, page) => setPage(page)}
+              page={pageIncoming}
+              onChange={(e, pageIncoming) => setPageIncoming(pageIncoming)}
             />
           </Stack>
         </Stack>
 
         <Grid container spacing={3} my={1}>
-          {users.map((user) => (
+          {usersIncoming.map((user) => (
             <Grid key={user._id} item xs={12} md={4}>
               <UserCard profile={user} />
             </Grid>
           ))}
         </Grid>
       </Card>
+
+      
     </Container>
   );
 }
