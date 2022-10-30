@@ -15,13 +15,13 @@ import SearchInput from "../../components/SearchInput";
 
 function FriendRequests() {
   const [filterNameIncoming, setFilterNameIncoming] = useState("");
-  const [pageIncoming, setPageIncoming] = React.useState(1);
+  const [page, setPage] = React.useState(1);
 
   const { 
     currentPageUsers, 
     usersById, 
     totalUsers, 
-    totalPages,} = useSelector(
+    totalPages} = useSelector(
     (state) => state.friend
   );
 
@@ -34,8 +34,8 @@ function FriendRequests() {
 
 
   useEffect(() => {
-    dispatch(getFriendRequests({ filterNameIncoming, pageIncoming }));
-  }, [filterNameIncoming,pageIncoming, dispatch]);
+    dispatch(getFriendRequests({ filterNameIncoming, page }));
+  }, [filterNameIncoming,page, dispatch]);
 
   return (
     <Container>
@@ -69,8 +69,8 @@ function FriendRequests() {
 
             <Pagination
               count={totalPages}
-              page={pageIncoming}
-              onChange={(e, pageIncoming) => setPageIncoming(pageIncoming)}
+              page={page}
+              onChange={(e, page) => setPage(page)}
             />
           </Stack>
         </Stack>

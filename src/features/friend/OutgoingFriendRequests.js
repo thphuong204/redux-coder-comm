@@ -15,7 +15,7 @@ import SearchInput from "../../components/SearchInput";
 
 function OutgoingFriendRequests() {
   const [filterNameOutgoing, setFilterNameOutgoing] = useState("");
-  const [pageOutgoing, setPageOutgoing] = React.useState(1);
+  const [page, setPage] = React.useState(1);
 
   const { 
     currentPageUsers,
@@ -35,8 +35,8 @@ function OutgoingFriendRequests() {
 
 
   useEffect(() => {
-    dispatch(getFriendRequestsOutgoing({filterNameOutgoing, pageOutgoing }))
-  }, [filterNameOutgoing, pageOutgoing, dispatch]);
+    dispatch(getFriendRequestsOutgoing({filterNameOutgoing, page }))
+  }, [filterNameOutgoing, page, dispatch]);
 
   return (
     <Container>
@@ -70,8 +70,8 @@ function OutgoingFriendRequests() {
 
             <Pagination
               count={totalPages}
-              page={pageOutgoing}
-              onChange={(e, pageOutgoing) => setPageOutgoing(pageOutgoing)}
+              page={page}
+              onChange={(e, page) => setPage(page)}
             />
           </Stack>
         </Stack>
