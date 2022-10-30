@@ -33,7 +33,7 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: "50%",
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: 'none',
   boxShadow: 24,
   p: 4,
 };
@@ -46,7 +46,13 @@ function PostCard({ post }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openShowMore = Boolean(anchorEl);
   const handleClickShowMore = (event) => {
-    setAnchorEl(event.currentTarget);
+    if (user._id !== post.author._id) {
+      toast.error("You can't change other people' posts");
+    }
+    if (user._id === post.author._id) {
+      setAnchorEl(event.currentTarget);
+    }
+    
   };
   const handleCloseShowMore = () => {
     setAnchorEl(null);
@@ -57,7 +63,6 @@ function PostCard({ post }) {
     if (user._id === post.author._id) {
       setOpenModalEdit(true)
     }
-
     if (user._id !== post.author._id) {
       toast.error("You can't change other people' posts");
     }
